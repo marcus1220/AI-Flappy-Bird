@@ -93,12 +93,12 @@ class Bird:
     def get_mask(self):
         return pygame.mask.from_surface(self.img)
 
-#class for base
+#class for pipe
 class Pipe:
     GAP = 200
     VELOCITY = 5
 
-
+#flip the top pipe
     def __init__(self,x):
         self.x=x
         self.height=0
@@ -109,12 +109,13 @@ class Pipe:
         self.passed=False
         self.set_height()
 
-#random height
+#random height of the pipe
     def set_height(self):
         self.height=random.randrange(50,450)
         self.top=self.height-self.PIPE_TOP.get_height()
         self.botton=self.height+self.GAP
 
+#speed of the bg move
     def move(self):
         self.x-=self.VELOCITY
 
@@ -122,6 +123,7 @@ class Pipe:
         window.blit(self.PIPE_TOP,(self.x,self.top))
         window.blit(self.PIPE_BOTTON,(self.x,self.botton))
     
+#where said if=ture, game over
     def collide(self,bird,window):
         bird_mask=bird.get_mask()
         top_mask=pygame.mask.from_surface(self.PIPE_TOP)
@@ -135,7 +137,7 @@ class Pipe:
             return True
         return False
 
-
+#class of the base
 class Base:
     VELOCITY = 5
     width = BASE_IMG.get_width()

@@ -93,6 +93,75 @@ class Bird:
     def get_mask(self):
         return pygame.mask.from_surface(self.img)
 
+#class for base
+class Pipe:
+    GAP = 200
+    VELOCITY = 5
+
+
+    def __init__(self,x):
+        self.x=x
+        self.height=0
+        self.hop=0
+        self.botton=0
+        self.PIPE_TOP=pygame.transform.flip(PIPE_IMG,False,True)
+        self.PIPE_BOTTON=PIPE_IMG
+        self.passed=False
+        self.set_height()
+
+#random height
+    def set_height(self):
+        self.height=random.randrange(50,450)
+        self.top=self.height-self.PIPE_TOP.get_height()
+        self.botton=self.height+self.GAP
+
+    def move(self):
+        self.x-=self.VELOCITY
+
+    def draw(self,window):
+        window.blit(self.PIPE_TOP,(self.x,self.top))
+        window.blit(self.PIPE_BOTTON,(self.x,self.botton))
+    
+    def collide(self,bird,window):
+        bird_mask=bird.get_mask()
+        top_mask=pygame.mask.from_surface(self.PIPE_TOP)
+        botton_mask=pygame.mask.from_surface(self.PIPE_BOTTON)
+        top_offset=(self.x-bird.x,self.top-round(bird.y))
+        botton_offset=(self.x-bird,self.botton-round.y)
+        top_point=bird_mask.overlap(top_mask, top_offset)
+        botton_point=bird_mask.overlap(botton_mask, botton_offset)
+
+        if top_point or botton_point:
+            return True
+        return False
+
+
+class Base:
+    VELOCITY = 5
+    width = BASE_IMG.get_width()
+    img=BG_IMG
+
+    def __init__(self,y):
+        self.y=y
+        self.x1=0
+        self.x2=self.WIDTH
+
+    def move(self):
+        self.x1-=self.VELOCITY
+        self.x2-=self.VELOCITY
+        
+        if self.x1+self.width <0:
+            self.x1=self.x2+self.WIDTH
+
+        if self.x2+self.width <0:
+            self.x2=self.x1+self.WIDTH
+
+    def draw(self,window):
+        window.blit(self.IMG,(self.x1,self.y))
+        window.blit(self.IMG,(self.x2,self.y))
+
+
+
 
 def draw_window(window, bird):
     window.blit(BG_IMG, (0,0))

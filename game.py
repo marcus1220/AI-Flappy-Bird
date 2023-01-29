@@ -164,7 +164,7 @@ class Base:
 
 
 
-
+#drawing window
 def draw_window(window, bird):
     window.blit(BG_IMG, (0,0))
     bird.draw(window)

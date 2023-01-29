@@ -6,7 +6,7 @@ import random
 
 #window frame constants
 WIN_WIDTH = 575
-WIN_HEIGHT = 800
+WIN_HEIGHT = 700
 
 #images
 BIRD_IMGS = [pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "bird1.png"))), pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "bird2.png"))), pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "bird3.png")))]
@@ -179,7 +179,7 @@ def draw_window(window, bird, pipes, base):
 def main():
     bird = Bird(200, 200)
     pipes = [Pipe(700)]
-    base = Base(730)
+    base = Base(650)
     window = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
     fps = pygame.time.Clock()
 

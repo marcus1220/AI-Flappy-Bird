@@ -6,7 +6,7 @@ import random
 
 #window frame constants
 WIN_WIDTH = 550
-WIN_HEIGHT = 800
+WIN_HEIGHT = 700
 
 #images
 BIRD_IMGS = [pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "bird1.png"))), pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "bird2.png"))), pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "bird3.png")))]
@@ -140,8 +140,8 @@ class Pipe:
 #class of the base
 class Base:
     VELOCITY = 5
-    width = BASE_IMG.get_width()
-    img=BG_IMG
+    WIDTH = BASE_IMG.get_width()
+    IMG=BG_IMG
 
     def __init__(self,y):
         self.y=y
@@ -152,10 +152,10 @@ class Base:
         self.x1-=self.VELOCITY
         self.x2-=self.VELOCITY
         
-        if self.x1+self.width <0:
+        if self.x1+self.WIDTH <0:
             self.x1=self.x2+self.WIDTH
 
-        if self.x2+self.width <0:
+        if self.x2+self.WIDTH <0:
             self.x2=self.x1+self.WIDTH
 
     def draw(self,window):
@@ -165,13 +165,18 @@ class Base:
 
 
 #drawing window
-def draw_window(window, bird):
+def draw_window(window, bird, pipes, base):
     window.blit(BG_IMG, (0,0))
+    for pipe in pipes:
+        pipe.draw(window)
+    base.draw(window)
     bird.draw(window)
     pygame.display.update()
 
 def main():
+    base = Base(730)
     bird = Bird(200, 200)
+    pipes=[Pipe(700)]
     window = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
     fps = pygame.time.Clock()
 
@@ -183,8 +188,11 @@ def main():
             if event.type == pygame.QUIT:
                 run = False
 
-        bird.move()
-        draw_window(window, bird)
+        for pipe in pipes:
+            pipe.move()
+        #bird.move()
+        base.move()
+        draw_window(window, bird, pipes, base)
 
     pygame.quit()
     quit()
